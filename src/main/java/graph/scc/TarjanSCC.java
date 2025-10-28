@@ -31,17 +31,14 @@ public class TarjanSCC {
         for (int i = 0; i < k; i++) {
             for (int v : components.get(i)) compId[v] = i;
         }
-        // build condensation graph
         Graph cond = new Graph(k);
         for (int i = 0; i < k; i++) {
             cond.setNode(i, new Node(i, "comp"+i, components.get(i).stream().mapToLong(v->g.getNode(v).getDuration()).sum()));
         }
-        // avoid duplicate edges
         for (int u = 0; u < n; u++) {
             for (Edge e : g.outEdges(u)) {
                 int cu = compId[u], cv = compId[e.getTo()];
                 if (cu != cv) {
-                    // add edge if not already present
                     boolean exists = cond.outEdges(cu).stream().anyMatch(ed->ed.getTo()==cv);
                     if (!exists) cond.addEdge(cu, cv, 0L);
                 }

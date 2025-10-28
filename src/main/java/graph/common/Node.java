@@ -6,7 +6,7 @@ public final class Node {
     private final int id;
     private final String label;
     private final long duration;
-    private final List<Edge> edges = new ArrayList<>(); // приватное поле
+    public final List<Edge> edges = new ArrayList<>();
 
     public Node(int id, String label, long duration) {
         this.id = id;
