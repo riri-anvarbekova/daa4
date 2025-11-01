@@ -2,16 +2,29 @@ package graph.topo;
 
 import graph.common.*;
 import java.util.*;
-
+/**
+ * I compute a topological order of a DAG using Kahn's algorithm.
+ * I also track metrics for pushes and pops.
+ */
 
 public class TopologicalSort {
     private final Graph g;
     private final Metrics metrics;
-
+    /**
+     * I prepare topological sorting.
+     *
+     * @param g       the DAG to sort
+     * @param metrics metrics collector
+     */
 
     public TopologicalSort(Graph g, Metrics metrics) { this.g = g; this.metrics = metrics; }
 
-
+    /**
+     * I return a topological order of the graph nodes using Kahn's algorithm.
+     *
+     * @return list of node indices in topological order
+     * @throws IllegalStateException if the graph contains a cycle
+     */
     public List<Integer> kahnOrder() {
         int n = g.n();
         int[] indeg = new int[n];

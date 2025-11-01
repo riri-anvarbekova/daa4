@@ -1,7 +1,11 @@
 package graph.scc;
+
 import graph.common.*;
 import java.util.*;
-
+/**
+ * I implement Tarjan's algorithm to find strongly connected components (SCCs) in a directed graph.
+ * I create a condensation DAG and assign component IDs to each node.
+ */
 public class TarjanSCC {
     private final Graph g;
     private final Metrics metrics;
@@ -12,9 +16,16 @@ public class TarjanSCC {
     private boolean[] onStack;
     private Deque<Integer> stack;
     private final List<List<Integer>> components = new ArrayList<>();
-
+    /**
+     * I prepare Tarjan's SCC algorithm.
+     *
+     * @param g       the graph to analyze
+     * @param metrics metrics collector
+     */
     public TarjanSCC(Graph g, Metrics metrics) {
-        this.g = g; this.metrics = metrics; this.n = g.n();
+        this.g = g;
+        this.metrics = metrics;
+        this.n = g.n();
         idx = new int[n]; Arrays.fill(idx, -1);
         low = new int[n]; onStack = new boolean[n]; stack = new ArrayDeque<>();
     }
@@ -25,25 +36,33 @@ public class TarjanSCC {
             if (idx[v] == -1) strongconnect(v);
         }
         metrics.stop();
-        // build compId
+
         int k = components.size();
         int[] compId = new int[n];
         for (int i = 0; i < k; i++) {
             for (int v : components.get(i)) compId[v] = i;
         }
+
         Graph cond = new Graph(k);
         for (int i = 0; i < k; i++) {
-            cond.setNode(i, new Node(i, "comp"+i, components.get(i).stream().mapToLong(v->g.getNode(v).getDuration()).sum()));
+            long sumDur = 0L;
+            for (int v : components.get(i)) {
+                Node node = g.getNode(v);
+                if (node != null) sumDur += node.getDuration();
+            }
+            cond.setNode(i, new Node(i, "comp" + i, sumDur));
         }
+
         for (int u = 0; u < n; u++) {
             for (Edge e : g.outEdges(u)) {
                 int cu = compId[u], cv = compId[e.getTo()];
                 if (cu != cv) {
-                    boolean exists = cond.outEdges(cu).stream().anyMatch(ed->ed.getTo()==cv);
+                    boolean exists = cond.outEdges(cu).stream().anyMatch(ed -> ed.getTo() == cv);
                     if (!exists) cond.addEdge(cu, cv, 0L);
                 }
             }
         }
+
         return new SCCResult(components, compId, cond);
     }
 
@@ -69,3 +88,4 @@ public class TarjanSCC {
         }
     }
 }
+
