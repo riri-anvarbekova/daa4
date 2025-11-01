@@ -4,16 +4,15 @@ import graph.common.Graph;
 import graph.common.Metrics;
 import graph.common.Node;
 import graph.dagsp.DAGShortestPaths;
+import graph.dagsp.PathResult;
 import graph.topo.TopologicalSort;
-import org.example.graph.common.GraphUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-
-import java.io.FileInputStream;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
+import java.io.FileInputStream;
+
 
 class DAGShortestPathsTest {
 
@@ -72,5 +71,31 @@ class DAGShortestPathsTest {
         var sp = dagSP.shortestFrom(0);
         assertEquals(0, sp.dist[0]);
     }
+    @Test
+    void testDAGShortestAndLongestPaths() {
+        Graph g = new Graph(4);
+        for (int i = 0; i < 4; i++) g.setNode(i, new Node(i, "N" + i, 1));
 
+        g.addEdge(0, 1, 1);
+        g.addEdge(0, 2, 1);
+        g.addEdge(1, 3, 1);
+        g.addEdge(2, 3, 1);
+
+        Metrics m = new Metrics();
+        List<Integer> topo = new TopologicalSort(g, m).kahnOrder();
+
+        DAGShortestPaths dagSP = new DAGShortestPaths(g, topo, m);
+        PathResult shortest = dagSP.shortestFrom(0);
+        PathResult longest = dagSP.longestFrom(0);
+
+        assertEquals(0, shortest.dist[0]);
+        assertEquals(1, shortest.dist[1]);
+        assertEquals(1, shortest.dist[2]);
+        assertEquals(2, shortest.dist[3]);
+
+        assertEquals(0, longest.dist[0]);
+        assertEquals(1, longest.dist[1]);
+        assertEquals(1, longest.dist[2]);
+        assertEquals(2, longest.dist[3]);
+    }
 }

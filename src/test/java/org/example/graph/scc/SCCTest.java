@@ -8,6 +8,10 @@ import org.example.graph.common.GraphUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+import graph.scc.SCCResult;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,4 +57,23 @@ class SCCTest {
         var res = scc.run();
         assertEquals(1, res.components.size());
     }
+
+        @Test
+        void testSCCSimpleGraph() {
+            Graph g = new Graph(4);
+            for (int i = 0; i < 4; i++) g.setNode(i, new Node(i, "N" + i, 1));
+
+            g.addEdge(0, 1, 1);
+            g.addEdge(1, 2, 1);
+            g.addEdge(2, 0, 1); // цикл 0->1->2->0
+            g.addEdge(2, 3, 1); // отдельная вершина 3
+
+            Metrics m = new Metrics();
+            TarjanSCC scc = new TarjanSCC(g, m);
+            SCCResult res = scc.run();
+
+            assertEquals(2, res.components.size(), "Should be 2 SCC");
+            assertTrue(res.components.stream().anyMatch(c -> c.containsAll(List.of(0,1,2))));
+            assertTrue(res.components.stream().anyMatch(c -> c.contains(3)));
+        }
 }

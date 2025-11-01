@@ -5,11 +5,13 @@ import graph.topo.TopologicalSort;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-
-import java.io.FileInputStream;
+import graph.common.Graph;
+import graph.common.Metrics;
+import graph.common.Node;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
+import java.io.FileInputStream;
+
 
 class TopologicalSortTest {
 
@@ -74,5 +76,24 @@ class TopologicalSortTest {
         List<Integer> order = topo.kahnOrder();
         assertEquals(1, order.size());
     }
+    @Test
+    void testTopologicalOrderSimpleDAG() {
+        Graph g = new Graph(4);
+        for (int i = 0; i < 4; i++) g.setNode(i, new Node(i, "N" + i, 1));
 
+        g.addEdge(0, 1, 1);
+        g.addEdge(0, 2, 1);
+        g.addEdge(1, 3, 1);
+        g.addEdge(2, 3, 1);
+
+        Metrics m = new Metrics();
+        TopologicalSort topo = new TopologicalSort(g, m);
+        List<Integer> order = topo.kahnOrder();
+
+        assertEquals(4, order.size());
+        assertTrue(order.indexOf(0) < order.indexOf(1));
+        assertTrue(order.indexOf(0) < order.indexOf(2));
+        assertTrue(order.indexOf(1) < order.indexOf(3));
+        assertTrue(order.indexOf(2) < order.indexOf(3));
+    }
 }
