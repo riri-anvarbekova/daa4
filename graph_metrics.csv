@@ -1,0 +1,10 @@
+File,DFS_Visits,DFS_Edges,DFS_Time_ns,DAGSP_Relaxations,DAGSP_Time_ns,Vertices
+src/main/java/graph/data/small_graphs.json,6,7,31583,0,281500,6
+src/main/java/graph/data/small_graphs.json,7,8,20416,0,11458,7
+src/main/java/graph/data/small_graphs.json,8,8,14416,0,21459,8
+src/main/java/graph/data/medium_graphs.json,3,3,6916,0,21792,12
+src/main/java/graph/data/medium_graphs.json,15,14,18875,0,34084,15
+src/main/java/graph/data/medium_graphs.json,3,3,7209,0,23292,18
+src/main/java/graph/data/large_graphs.json,20,20,22333,0,36042,20
+src/main/java/graph/data/large_graphs.json,3,3,5125,0,33542,30
+src/main/java/graph/data/large_graphs.json,4,4,7875,0,31166,45
