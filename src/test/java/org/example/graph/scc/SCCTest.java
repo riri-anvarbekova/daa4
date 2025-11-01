@@ -13,8 +13,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-import static org.junit.jupiter.api.Assertions.*;
-
 
 class SCCTest {
 //Tests Tarjan's SCC algorithm on JSON-loaded graphs. Checks for non-empty component list
