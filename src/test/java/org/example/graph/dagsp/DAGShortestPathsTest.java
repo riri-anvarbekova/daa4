@@ -67,7 +67,7 @@ class DAGShortestPathsTest {
         Graph g = new Graph(1);
         g.setNode(0, new Node(0, "N0", 1));
         Metrics m = new Metrics();
-        List<Integer> topo = List.of(0); // единственная вершина
+        List<Integer> topo = List.of(0);
         DAGShortestPaths dagSP = new DAGShortestPaths(g, topo, m);
         var sp = dagSP.shortestFrom(0);
         assertEquals(0, sp.dist[0]);
