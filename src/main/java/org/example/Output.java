@@ -15,7 +15,7 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 
-public class App {
+public class Output{
 
     public static void main(String[] args) {
         try {
@@ -64,7 +64,6 @@ public class App {
             PathResult shortest = dagSP.shortestFrom(source);
             PathResult longest = dagSP.longestFrom(source);
 
-            // Вывод результатов
             System.out.println("=== Graph #" + i + " ===");
             System.out.println("SCC Components: " + sccRes.components);
             System.out.println("Topological order of components: " + compOrder);
@@ -77,7 +76,6 @@ public class App {
             System.out.println("Longest distances: " + Arrays.toString(longest.dist));
             System.out.println("==============================\n");
 
-            // Сохранение в CSV
             writeResultsToCSV("output.csv", i, sccRes.components, compOrder, shortest.dist, longest.dist);
         }
     }
@@ -101,13 +99,13 @@ public class App {
                                          List<Integer> topoOrder,
                                          long[] shortestDist,
                                          long[] longestDist) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(filename, true))) { // true = дописываем
+        try (PrintWriter pw = new PrintWriter(new FileWriter(filename, true))) {
             pw.println("Graph #" + graphId);
             pw.println("SCC Components: " + sccComponents);
             pw.println("Topological order: " + topoOrder);
             pw.println("Shortest distances: " + Arrays.toString(shortestDist));
             pw.println("Longest distances: " + Arrays.toString(longestDist));
-            pw.println(); // пустая строка между графами
+            pw.println();
         } catch (IOException e) {
             e.printStackTrace();
         }

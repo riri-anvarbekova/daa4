@@ -62,4 +62,5 @@ public class Graph {
         for (int i = 0; i < nodeList.size(); i++) g.setNode(i, nodeList.get(i));
         return g;
     }
+
 }
