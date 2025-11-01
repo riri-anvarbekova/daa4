@@ -83,7 +83,7 @@ Practice: Empirical observations indicate stable execution times for DFS across 
 
 **DFS Execution Time Graph:**
 
-![DFS Execution Time](./design_algor-4/1.png)  
+<img src="2.png" alt="" width="500"/>
 *This graph shows the relationship between DFS execution time (DFS_Time_ns) and the number of vertices (Vertices).*
 
 ---
@@ -109,8 +109,7 @@ Limitations:
 Practice: For small and medium graphs, DAGSP demonstrates efficient linear-time performance. For large, dense graphs, execution time scales with the number of edges, matching theoretical predictions. This confirms that edge count, rather than vertex count alone, dominates runtime for dense structures.
 
 **DAGSP Execution Time Graph:**
-
-![DAGSP Execution Time](./design_algor-4/1.png)  
+<img src="3.png" alt="" width="500"/> 
 *This graph shows the relationship between DAGSP execution time (DAGSP_Time_ns) and the number of vertices (Vertices).*
 
 ---
@@ -139,7 +138,6 @@ Tarjan’s algorithm identifies all strongly connected components (SCCs) of a di
 
 **SCC Analysis Graph:**
 
-![SCC Components](./design_algor-4/3.png)  
 *Tarjan’s algorithm identifies SCCs in a single DFS traversal.*
 
 ---
@@ -176,7 +174,7 @@ Large graph with multiple cycles | DFS + SCC | DFS confirms connectivity; SCC id
 
 **DFS vs DAGSP Comparison Graph:**
 
-![DFS vs DAGSP](./design_algor-4/1.png)  
+<img src="1.png" alt="" width="500"/>
 *This graph compares the execution times of DFS and DAGSP on the same chart.*
 
 ---
