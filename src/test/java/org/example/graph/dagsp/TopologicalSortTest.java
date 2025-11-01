@@ -14,7 +14,7 @@ import java.io.FileInputStream;
 
 
 class TopologicalSortTest {
-
+//Tests Topological Sort on JSON-loaded graphs. Verifies order validity against all edges
     @Test
     void testTopologicalOrder() {
         try (FileInputStream fis = new FileInputStream("src/main/java/graph/data/small_graphs.json")) {
@@ -24,12 +24,10 @@ class TopologicalSortTest {
                 JSONObject gObj = graphsArray.getJSONObject(i);
                 Graph g = new Graph(gObj.getInt("n"));
 
-                // Добавляем вершины
                 for (int v = 0; v < gObj.getInt("n"); v++) {
                     g.setNode(v, new Node(v, "Node" + v, 1));
                 }
 
-                // Добавляем ребра
                 JSONArray edges = gObj.getJSONArray("edges");
                 for (int j = 0; j < edges.length(); j++) {
                     JSONObject e = edges.getJSONObject(j);
@@ -58,6 +56,7 @@ class TopologicalSortTest {
             fail("Failed to read or process graphs JSON");
         }
     }
+//    Tests the edge case of an empty graph
     @Test
     void testEmptyGraphTopo() {
         Graph g = new Graph(0);
@@ -66,7 +65,7 @@ class TopologicalSortTest {
         List<Integer> order = topo.kahnOrder();
         assertTrue(order.isEmpty());
     }
-
+//Tests the minimal case of a single node graph
     @Test
     void testSingleNodeTopo() {
         Graph g = new Graph(1);
@@ -76,6 +75,7 @@ class TopologicalSortTest {
         List<Integer> order = topo.kahnOrder();
         assertEquals(1, order.size());
     }
+//    Tests Topological Sort on a simple, known 4-node DAG. Verifies relative node order.
     @Test
     void testTopologicalOrderSimpleDAG() {
         Graph g = new Graph(4);

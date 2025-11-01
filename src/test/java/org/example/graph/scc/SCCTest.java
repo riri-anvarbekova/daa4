@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class SCCTest {
-
+//Tests Tarjan's SCC algorithm on JSON-loaded graphs. Checks for non-empty component list
     @Test
     void testSCCFromJsonArray() {
         JSONArray graphs = GraphUtils.readJsonArray("src/main/java/graph/data/small_graphs.json");
@@ -39,6 +39,7 @@ class SCCTest {
             System.out.println("Metrics: " + metrics);
         }
     }
+//    Tests the edge case of an empty graph
     @Test
     void testEmptyGraph() {
         Graph g = new Graph(0);
@@ -47,7 +48,7 @@ class SCCTest {
         var res = scc.run();
         assertEquals(0, res.components.size());
     }
-
+//Tests the minimal case of a single node graph
     @Test
     void testSingleNode() {
         Graph g = new Graph(1);
@@ -57,7 +58,7 @@ class SCCTest {
         var res = scc.run();
         assertEquals(1, res.components.size());
     }
-
+//Tests Tarjan's algorithm on a graph with one cycle and one isolated node. Verifies the count and membership of 2 SCCs
         @Test
         void testSCCSimpleGraph() {
             Graph g = new Graph(4);

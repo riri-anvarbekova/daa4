@@ -15,7 +15,7 @@ import java.io.FileInputStream;
 
 
 class DAGShortestPathsTest {
-
+    //Tests Shortest and Longest Paths on JSON-loaded graphs
     @Test
     void testDAGShortestAndLongestPathsFromJson() {
         try (FileInputStream fis = new FileInputStream("src/main/java/graph/data/small_graphs.json")) {
@@ -25,12 +25,10 @@ class DAGShortestPathsTest {
                 JSONObject gObj = graphsArray.getJSONObject(i);
                 Graph g = new Graph(gObj.getInt("n"));
 
-                // Добавляем вершины
                 for (int v = 0; v < gObj.getInt("n"); v++) {
                     g.setNode(v, new graph.common.Node(v, "Node" + v, 1));
                 }
 
-                // Добавляем ребра
                 JSONArray edges = gObj.getJSONArray("edges");
                 for (int j = 0; j < edges.length(); j++) {
                     JSONObject e = edges.getJSONObject(j);
@@ -61,6 +59,7 @@ class DAGShortestPathsTest {
             fail("Failed to read or process graphs JSON");
         }
     }
+    //Tests Shortest Path on a minimal graph
     @Test
     void testSingleNodeDAGSP() {
         Graph g = new Graph(1);
@@ -71,6 +70,7 @@ class DAGShortestPathsTest {
         var sp = dagSP.shortestFrom(0);
         assertEquals(0, sp.dist[0]);
     }
+    //Tests Shortest/Longest Paths on a simple, known 4-node DAG. Verifies expected distances.
     @Test
     void testDAGShortestAndLongestPaths() {
         Graph g = new Graph(4);
